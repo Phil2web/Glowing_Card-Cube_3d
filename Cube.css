@@ -1,0 +1,146 @@
+/*! ************************************************************************** */
+/*!                             code html à copier                             */
+/*! -------- adapter le nom de la deuxieme class en fonction du besoin ------- */
+/*! ************************************************************************** */
+
+/*! ---------------------dans la partie HEAD de la page HTML ----------------- */
+/* 
+<link rel="stylesheet" href="Cube.css" /> 
+*/
+
+/*! ----------------- code à placer à l'emplacement souhaité ----------------- */
+/*! ------- si plus d'un cube dans la page modifier .cubecarte1 en 2... ------ */
+/* 
+<div class="cube cubecarte1">    
+	<div class="top"></div>
+	<div>
+		<span style="--i:0"></span>
+		<span style="--i:1"></span>
+		<span style="--i:2"></span>
+		<span style="--i:3"></span>
+	</div>
+</div> 
+*/
+
+/*! -------------------- Gestion des varriables des cubes -------------------- */
+.cubecarte1 {
+  --topposition: 25px;
+  --leftposition: 10px;
+  --dimensionducube: 25px;
+  --couleurfoncee: rgb(0, 0, 0);
+  --couleurvive: rgb(239, 14, 247);
+  --couleurfacesup: rgb(34, 34, 34);
+  --axederotation1: -30deg;
+  --axederotation2: -30deg;
+  --sensderotation1: 180deg;
+  --sensderotation2: 360deg;
+  --vitessederotation: 8s;
+}
+
+.cubecarte2 {
+  --topposition: 25px;
+  --leftposition: 10px;
+  --dimensionducube: 25px;
+  --couleurfoncee: rgb(0, 0, 0);
+  --couleurvive: rgb(229, 255, 0);
+  --couleurfacesup: rgb(34, 34, 34);
+  --axederotation1: -30deg;
+  --axederotation2: -30deg;
+  --sensderotation1: -180deg;
+  --sensderotation2: 360deg;
+  --vitessederotation: 10s;
+}
+
+.cubecarte3 {
+  --topposition: 25px;
+  --leftposition: 10px;
+  --dimensionducube: 25px;
+  --couleurfoncee: rgb(0, 0, 0);
+  --couleurvive: rgb(0, 255, 255);
+  --couleurfacesup: rgb(34, 34, 34);
+  --axederotation1: -30deg;
+  --axederotation2: -30deg;
+  --sensderotation1: -180deg;
+  --sensderotation2: -360deg;
+  --vitessederotation: 2s;
+}
+/*! ************************************************************************** */
+
+/*! --------------------------- Création des cubes --------------------------- */
+.cube {
+  position: relative;
+  top: var(--topposition); /*? positionnement du cube */
+  left: var(--leftposition); /*? positionnement du cube */
+  width: var(--dimensionducube); /*? dimmention du cube */
+  height: var(--dimensionducube); /*? dimmention du cube */
+  transform-style: preserve-3d;
+  transform: rotateX(var(--axederotation1));
+  animation: animate-cube var(--vitessederotation) linear infinite; /*? durée de rotaion */
+}
+
+@keyframes animate-cube {
+  0% {
+    transform: rotateX(var(--axederotation1)) rotateY(0deg); /*? inclinaison et rotation du cube */
+  }
+  50% {
+    transform: rotateX(var(--axederotation2)) rotateY(var(--sensderotation1)); /*? inclinaison et rotation du cube */
+  }
+  100% {
+    transform: rotateX(var(--axederotation1)) rotateY(var(--sensderotation2)); /*? inclinaison et rotation du cube */
+  }
+}
+
+.cube div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cube div span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    var(--couleurfoncee),
+    var(--couleurvive)
+  ); /* linear-gradient(#050100 0%,#f1fb00 25%);*/
+  transform: rotateY(calc(90deg * var(--i)))
+    translateZ(calc(var(--dimensionducube) / 2));
+}
+
+.top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--dimensionducube);
+  height: var(--dimensionducube);
+  background: var(--couleurfacesup);
+  transform: rotateX(90deg) translateZ(calc(var(--dimensionducube) / 2));
+}
+/* ************************************************************************** */
+
+/*! ------------------------------ base du cube ------------------------------ */
+.top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--dimensionducube); /*? dimmention reflet du cube */
+  height: var(--dimensionducube); /*? dimmention reflet du cube */
+  background: var(--couleurvive);
+  transform: translateZ(
+    calc(var(--dimensionducube) * -1.9)
+  ); /*? hauteur refet du cube */
+  filter: blur(20px);
+  box-shadow: 0 0 calc(var(--dimensionducube) * 0.6) var(--couleurvive, 0.2),
+    0 0 calc(var(--dimensionducube) * 1) var(--couleurvive, 0.4),
+    0 0 calc(var(--dimensionducube) * 1.5) var(--couleurvive, 0.6),
+    0 0 calc(var(--dimensionducube) * 2) var(--couleurvive, 0.8),
+    0 0 calc(var(--dimensionducube) * 2.5) var(--couleurvive, 1); /*? portée reflet du cube */
+}
+/* ************************************************************************** */
